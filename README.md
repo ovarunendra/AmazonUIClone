@@ -4,4 +4,4 @@
 
 ## Demo iPhone
 <img src="https://raw.githubusercontent.com/ovarunendra/AmazonUIClone/master/demo/iPhone_home.png" width="200"> 
-<img src="https://raw.githubusercontent.com/ovarunendra/AmazonUIClone/master/demo/iPhone_drawer.png" width="200">
+<img src="https://raw.githubusercontent.com/ovarunendra/AmazonUIClone/master/demo/iphone_drawer.png" width="200">
