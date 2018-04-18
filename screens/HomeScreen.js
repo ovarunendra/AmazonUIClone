@@ -1,7 +1,9 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform, StatusBar, TouchableOpacity } from 'react-native';
-import { Container, Header, Left, Icon, Right, Item, Input, Content } from 'native-base';
+import { View, Text, StyleSheet, Platform, StatusBar, TouchableOpacity, Image } from 'react-native';
+import { Container, Header, Left, Icon, Right, Item, Input, Content, Card, CardItem } from 'native-base';
+import Swiper from 'react-native-swiper';
+import RecommendedCardItem from '../components/RecommendedCardItem';
 
 // create a component
 class HomeScreen extends Component {
@@ -42,6 +44,54 @@ class HomeScreen extends Component {
                             <Icon name="arrow-forward" style={{fontSize: 18}} />
                         </View>
                     </View>
+                    <Swiper style={{height: 100}} autoplay>
+                        <View style={{flex: 1}}>
+                            <Image 
+                            style={{flex: 1, height: null, width: null, resizeMode: 'contain'}}
+                            source={require('../assets/swiper_2.jpg')}/>
+                        </View>
+                        <View style={{flex: 1}}>
+                            <Image 
+                            style={{flex: 1, height: null, width: null, resizeMode: 'contain'}}
+                            source={require('../assets/swiper_3.jpg')}/>
+                        </View>
+                        <View style={{flex: 1}}>
+                            <Image
+                            style={{flex: 1, height: null, width: null, resizeMode: 'contain'}}
+                            source={require('../assets/swiper_2.jpg')}/>
+                        </View>
+                    </Swiper>
+                    <Card style={{ marginLeft: 5, marginRight: 5 }}>
+                        <CardItem header style={{ borderBottomWidth: 1, borderBottomColor: '#dee0e2' }}>
+                            <Text>Your Recommendations</Text>
+                        </CardItem>
+                        <RecommendedCardItem 
+                            itemName="You can heal your life"
+                            itemCreator="Louise Hay"
+                            itemPrice="$10"
+                            savings="2.5"
+                            imageUri={require("../assets/recommended_1.jpg")}
+                            rating={5}
+                        />
+                        <RecommendedCardItem
+                            itemName="Uncharted 4"
+                            itemCreator="Sony"
+                            itemPrice="$19.99"
+                            savings="17"
+                            imageUri={require("../assets/recommended_2.jpg")}
+                            rating={5}
+
+                        />
+                        <RecommendedCardItem
+                            itemName="Ea UFC 3"
+                            itemCreator="Ea Sports"
+                            itemPrice="$44"
+                            savings="6"
+                            imageUri={require("../assets/recommended_3.jpg")}
+                            rating={3}
+
+                        />
+                    </Card>
                 </Content>
             </Container>
         );
