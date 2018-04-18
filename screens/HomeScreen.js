@@ -8,11 +8,12 @@ import RecommendedCardItem from '../components/RecommendedCardItem';
 // create a component
 class HomeScreen extends Component {
     render() {
+        const { navigation } = this.props;
         return (
             <Container>
                 <Header style={[{ backgroundColor: '#3a455c', height: 90, borderBottomColor: '#757575' }, styles.androidHeader]}>
                     <Left style={{flexDirection: 'row'}}>
-                        <Icon name="md-menu" style={{color: 'white', marginRight: 15}} />
+                        <Icon onPress={() => navigation.navigate('DrawerOpen')} name="md-menu" style={{color: 'white', marginRight: 15}} />
                         <Icon type="FontAwesome" name="amazon" style={{color: 'white', fontSize: 32}} />
                     </Left>
                     <Right>
