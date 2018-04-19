@@ -39,12 +39,14 @@ const CustomDrawerContentComponent = (props) => {
               <Text>{item}</Text>
             </ListItem>
           )}
+          keyExtractor={item => item}
         />
         <FlatList
           style={{ borderTopWidth: 0.5, borderTopColor: '#f0f0f0' }}
           data={[
             'Your Wish List', 'Your Account', "Amazon Pay", "Prime", "Sell on Amazon"
           ]}
+          keyExtractor={item => item}
           renderItem={({ item }) => (
             <ListItem noBorder>
               <Text>{item}</Text>
@@ -56,6 +58,7 @@ const CustomDrawerContentComponent = (props) => {
           data={[
             'Settings', 'Customer Service'
           ]}
+          keyExtractor={item => item}
           renderItem={({ item }) => (
             <ListItem noBorder>
               <Text>{item}</Text>
