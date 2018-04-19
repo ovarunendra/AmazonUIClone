@@ -1,12 +1,75 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Platform, StatusBar, TouchableOpacity, Image } from 'react-native';
-import { Container, Header, Left, Icon, Right, Item, Input, Content, Card, CardItem } from 'native-base';
+import { gql } from 'apollo-boost';
+import { graphql } from 'react-apollo';
+import { View, Text, StyleSheet, Platform, StatusBar, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { Container, Header, Left, Icon, Right, Item, Input, Content, Card, CardItem, Spinner } from 'native-base';
 import Swiper from 'react-native-swiper';
 import RecommendedCardItem from '../components/RecommendedCardItem';
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
+const getDataQuery = gql`
+    {
+	    amazonViewer {
+            swiper {
+                id
+                imageUri
+            }
+            recommended{
+                id
+                itemName
+                itemCreator
+                itemPrice
+                savings
+                imageUri
+                rating
+            }
+	    }
+    }
+`;
 
 // create a component
 class HomeScreen extends Component {
+
+    renderSwiper = () => {
+        const { data } = this.props;
+        if(data.loading) {
+            return null;
+        }
+        const swipers = data.amazonViewer.swiper;
+        return (
+            <Swiper style={{height: 100}} autoplay>
+                {swipers.map(swiper => {
+                    return (
+                        <View style={{flex: 1}} key={swiper.id}>
+                            <Image
+                            style={{flex: 1, height: 100, width: SCREEN_WIDTH, resizeMode: 'contain'}}
+                            source={{uri: swiper.imageUri}}/>
+                        </View>
+                )})}
+            </Swiper>
+        );
+    };
+
+    renderRecommended = () => {
+        const { data } = this.props;
+        if(data.loading) {
+            return <Spinner />;
+        }
+        const recommendedItems = data.amazonViewer.recommended;
+        return recommendedItems.map(recommended => {
+            return (<RecommendedCardItem
+                key={recommended.id}
+                itemName={recommended.itemName}
+                itemCreator={recommended.itemCreator}
+                itemPrice={recommended.itemPrice}
+                savings={recommended.savings}
+                imageUri={recommended.imageUri}
+                rating={recommended.rating}
+            />);
+        });
+    };
+
     render() {
         const { navigation } = this.props;
         return (
@@ -45,53 +108,12 @@ class HomeScreen extends Component {
                             <Icon name="arrow-forward" style={{fontSize: 18}} />
                         </View>
                     </View>
-                    <Swiper style={{height: 100}} autoplay>
-                        <View style={{flex: 1}}>
-                            <Image 
-                            style={{flex: 1, height: null, width: null, resizeMode: 'contain'}}
-                            source={require('../assets/swiper_2.jpg')}/>
-                        </View>
-                        <View style={{flex: 1}}>
-                            <Image 
-                            style={{flex: 1, height: null, width: null, resizeMode: 'contain'}}
-                            source={require('../assets/swiper_3.jpg')}/>
-                        </View>
-                        <View style={{flex: 1}}>
-                            <Image
-                            style={{flex: 1, height: null, width: null, resizeMode: 'contain'}}
-                            source={require('../assets/swiper_2.jpg')}/>
-                        </View>
-                    </Swiper>
+                    {this.renderSwiper()}
                     <Card style={{ marginLeft: 5, marginRight: 5 }}>
                         <CardItem header style={{ borderBottomWidth: 1, borderBottomColor: '#dee0e2' }}>
                             <Text>Your Recommendations</Text>
                         </CardItem>
-                        <RecommendedCardItem 
-                            itemName="You can heal your life"
-                            itemCreator="Louise Hay"
-                            itemPrice="$10"
-                            savings="2.5"
-                            imageUri={require("../assets/recommended_1.jpg")}
-                            rating={5}
-                        />
-                        <RecommendedCardItem
-                            itemName="Uncharted 4"
-                            itemCreator="Sony"
-                            itemPrice="$19.99"
-                            savings="17"
-                            imageUri={require("../assets/recommended_2.jpg")}
-                            rating={5}
-
-                        />
-                        <RecommendedCardItem
-                            itemName="Ea UFC 3"
-                            itemCreator="Ea Sports"
-                            itemPrice="$44"
-                            savings="6"
-                            imageUri={require("../assets/recommended_3.jpg")}
-                            rating={3}
-
-                        />
+                        {this.renderRecommended()}
                     </Card>
                 </Content>
             </Container>
@@ -117,4 +139,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default HomeScreen;
+export default graphql(getDataQuery)(HomeScreen);

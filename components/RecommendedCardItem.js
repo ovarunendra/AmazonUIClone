@@ -11,7 +11,7 @@ class RecommendedCardItem extends Component {
         return (
             <CardItem>
                 <View>
-                    <Image style={{height: 90, width: 60}} source={imageUri}/>
+                    <Image style={{height: 90, width: 60}} source={{uri: imageUri}}/>
                 </View>
                 <Right style={{ flex: 1, alignItems: 'flex-start', height: 90, paddingHorizontal: 20 }}>
                     <Text>{itemName}</Text>
@@ -28,8 +28,6 @@ class RecommendedCardItem extends Component {
                         starSize={12}
                         fullStarColor='orange'
                         emptyStarColor='orange'
-
-
                     />
                 </Right>
             </CardItem>

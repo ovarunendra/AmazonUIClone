@@ -3,11 +3,19 @@ import { StyleSheet, Text, View, Platform, StatusBar, FlatList } from 'react-nat
 import { DrawerNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen';
 import { Container, Header, Left, Icon, Content, ListItem } from 'native-base';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+
+const client = new ApolloClient({
+  uri: 'https://graphql-server-dev.herokuapp.com/graphql'
+})
 
 export default class App extends React.Component {
   render() {
     return (
-      <AppDrawerNavigator />
+      <ApolloProvider client={client}>
+        <AppDrawerNavigator />
+      </ApolloProvider>
     );
   }
 }
@@ -27,15 +35,10 @@ const CustomDrawerContentComponent = (props) => {
             'Home', 'Shop by Category', "Today's Deals"
           ]}
           renderItem={({ item }) => (
-
             <ListItem noBorder>
               <Text>{item}</Text>
             </ListItem>
-
           )}
-
-
-
         />
         <FlatList
           style={{ borderTopWidth: 0.5, borderTopColor: '#f0f0f0' }}
@@ -43,32 +46,21 @@ const CustomDrawerContentComponent = (props) => {
             'Your Wish List', 'Your Account', "Amazon Pay", "Prime", "Sell on Amazon"
           ]}
           renderItem={({ item }) => (
-
             <ListItem noBorder>
               <Text>{item}</Text>
             </ListItem>
-
           )}
-
-
-
         />
-
         <FlatList
           style={{ borderTopWidth: 0.5, borderTopColor: '#f0f0f0' }}
           data={[
             'Settings', 'Customer Service'
           ]}
           renderItem={({ item }) => (
-
             <ListItem noBorder>
               <Text>{item}</Text>
             </ListItem>
-
           )}
-
-
-
         />
       </Content>
     </Container>
